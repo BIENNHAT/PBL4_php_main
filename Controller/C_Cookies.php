@@ -20,7 +20,14 @@ class C_Cookies
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $id = $_REQUEST["ID"];
             $boCookies = new BO_Cookies();
-            $listCookies = $boCookies->getListCookies($id);
+
+            if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == 0) {
+                $listCookies = $boCookies->getListCookies($id,0);
+            } else {
+                $listCookies = $boCookies->getListCookies($id, $_REQUEST["page"]);
+            }    
+           
+            $count =$boCookies->getCountListCookies($id);
             include_once("../View/viewCookies.php");
         } else {
             include_once('../View/noLogin.php');

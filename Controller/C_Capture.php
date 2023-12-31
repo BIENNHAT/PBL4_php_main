@@ -19,7 +19,15 @@ class C_Capture
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $id = $_REQUEST["ID"];
             $boCapture = new BO_Capture();
-            $listCapture = $boCapture->getListCapture($id);
+
+            $count = $boCapture->getCountListCapture($id);
+            if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == 0) {
+                $listCapture = $boCapture->getListCapture($id,0);
+            } else {
+                $listCapture = $boCapture->getListCapture($id, $_REQUEST["page"]);
+            }
+
+            
             include_once("../View/viewCapture.php");
         } else {
             include_once('../View/noLogin.php');

@@ -8,10 +8,15 @@ class BO_Cookies
         $daoCookies = new DAO_Cookies();
         $daoCookies->addCookies($idbot, $detail, $content);
     }
-    public function getListCookies($idbot)
+    public function getListCookies($idbot,$page)
     {
         $daoCookies = new DAO_Cookies();
-        return $daoCookies->getListCookies($idbot);
+        return $daoCookies->getListCookies($idbot,$page);
+    }
+    public function getCountListCookies($idbot)
+    {
+        $daoCookies = new DAO_Cookies();
+        return $daoCookies->getCountListCookies($idbot);
     }
     public function getCookiesDetail($idCookies)
     {

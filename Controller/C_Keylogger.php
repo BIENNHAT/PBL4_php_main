@@ -20,7 +20,15 @@ class C_Keylogger
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $id = $_REQUEST["ID"];
             $boKeylogger = new BO_Keylogger();
-            $listKeylogger = $boKeylogger->getListKeylogger($id);
+            $count = $boKeylogger->getCountListKeylogger($id);
+
+
+            if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == 0) {
+                $listKeylogger = $boKeylogger->getListKeylogger($id,0);
+            } else {
+                $listKeylogger = $boKeylogger->getListKeylogger($id, $_REQUEST["page"]);
+            }
+          
             include_once("../View/viewKeylogger.php");
         } else {
             include_once('../View/noLogin.php');

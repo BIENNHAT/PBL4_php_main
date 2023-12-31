@@ -13,11 +13,13 @@ class DAO_Capture
         $stmt->execute();
         $db->close();
     }
-    public function getListCapture($idbot)
+    public function getListCapture($idbot,$page)
     {
         $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
         mysqli_select_db($link, "pbl4_v2");
         $sql = "Select * from capture where IdBot = " . $idbot . " ORDER BY Time DESC";
+        $offset = $page * 15;
+        $sql = $sql . " LIMIT 15 OFFSET " . $offset;
         $rs = mysqli_query($link, $sql);
         $listCapture = array();
         $i = 0;
@@ -29,6 +31,20 @@ class DAO_Capture
             $listCapture[$i++] = new Capture($IdCapture, $IdBot, $Time, $CaptureResult);
         }
         return $listCapture;
+    }
+    public function getCountListCapture($idbot)
+    {
+        $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
+        mysqli_select_db($link, "pbl4_v2");
+        $sql = "Select * from capture where IdBot = " . $idbot . " ORDER BY Time DESC";
+
+        $rs = mysqli_query($link, $sql);
+    
+        $i = 0;
+        while ($row = mysqli_fetch_array($rs)) {
+           $i++;
+        }
+        return $i;
     }
     public function getCaptureDetail($idCapture)
     {

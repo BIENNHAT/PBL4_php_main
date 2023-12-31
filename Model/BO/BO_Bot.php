@@ -8,6 +8,20 @@ class BO_Bot
         $daoBot = new DAO_Bot();
         return $daoBot->getAllBot();
     }
+    public function getAllBotPage($page)
+    {
+        $daoBot = new DAO_Bot();
+        return $daoBot->getAllBotPage($page);
+    }
+    public function getCountAllBot()
+    {
+        $count = 0;
+        $allBot = $this->getAllBot();
+        foreach ($allBot as $index => $Bot) {
+            $count++;
+        }
+        return $count;
+    }
     public function getBotDetail($idBot)
     {
         $allBot = $this->getAllBot();
@@ -23,10 +37,38 @@ class BO_Bot
         $daoBot = new DAO_Bot();
         return $daoBot->getBotActive();
     }
+    public function getBotActivePage($page)
+    {
+        $daoBot = new DAO_Bot();
+        return $daoBot->getBotActivePage($page);
+    }
+    public function getCountBotActive()
+    {
+        $count = 0;
+        $botActive = $this->getBotActive();
+        foreach ($botActive as $index => $Bot) {
+            $count++;
+        }
+        return $count;
+    }
     public function getBotPassive()
     {
         $daoBot = new DAO_Bot();
         return $daoBot->getBotPassive();
+    }
+    public function getBotPassivePage($page)
+    {
+        $daoBot = new DAO_Bot();
+        return $daoBot->getBotPassivePage($page);
+    }
+    public function getCountBotPassive()
+    {
+        $count = 0;
+        $botPassive = $this->getBotPassive();
+        foreach ($botPassive as $index => $Bot) {
+            $count++;
+        }
+        return $count;
     }
     public function controlOneBot($ID)
     {

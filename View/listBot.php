@@ -77,6 +77,34 @@
             ?>
           </table>
         </div>
+        <div style="margin-top:16px; display:flex; column-gap: 8px; flex-wrap: wrap;">
+        <?php
+          if($count > 15)
+          {
+          echo '<p >Page</p>';
+            for ($i = 0; $i < $count / 15; $i++)
+            {
+            if (isset($_GET['opt'])) {
+              if ($_GET['opt'] == "view") {
+                $href = "C_Bot.php?opt=view&page=" . $i;
+              } else if ($_GET['opt'] == "passive") {
+                $href = "C_Bot.php?opt=passive&page=" . $i;
+              } else if ($_GET['opt'] == "active") {
+                $href = "C_Bot.php?opt=active&page=" . $i;
+              }
+              else {
+                $href = "C_Bot.php?opt=view&page=" . $i;
+              }
+            } 
+            $numPage = $i + 1;
+            $link = "<a style='text-decoration:underline; border: 1px solid #00ff00; padding:2px 4px; color: #00ff00;' href='" . $href . "'>" . $numPage . "</a>";
+            echo $link;
+            }
+          }
+        ?>  
+        
+       
+        </div>
       </div>
     </div>
     <?php

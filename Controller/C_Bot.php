@@ -10,7 +10,12 @@ class C_Bot
         session_start();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $boBot = new BO_Bot();
-            $listBot = $boBot->getAllBot();
+            if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == 0) {
+                $listBot = $boBot->getAllBotPage(0);
+            } else {
+                $listBot = $boBot->getAllBotPage($_REQUEST["page"]);
+            }
+            $count = $boBot->getCountAllBot();
             $_SESSION['header_display'] = "All Bot";
             include_once("../View/listBot.php");
         } else {
@@ -22,7 +27,12 @@ class C_Bot
         session_start();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $boBot = new BO_Bot();
-            $listBot = $boBot->getBotActive();
+            if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == 0) {
+                $listBot = $boBot->getBotActivePage(0);
+            } else {
+                $listBot = $boBot->getBotActivePage($_REQUEST["page"]);
+            }
+            $count = $boBot->getCountBotActive();
             $_SESSION['header_display'] = "Bot Active";
             include_once("../View/listBot.php");
         } else {
@@ -34,7 +44,15 @@ class C_Bot
         session_start();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $boBot = new BO_Bot();
-            $listBot = $boBot->getBotPassive();
+            if(!isset($_REQUEST["page"])|| $_REQUEST["page"] ==0)
+            {
+                $listBot = $boBot->getBotPassivePage(0);
+            }
+            else
+            {
+                $listBot = $boBot->getBotPassivePage($_REQUEST["page"]);
+            }
+            $count = $boBot->getCountBotPassive();
             $_SESSION['header_display'] = "Bot Passive";
             include_once("../View/listBot.php");
         } else {

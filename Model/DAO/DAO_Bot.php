@@ -21,6 +21,26 @@ class DAO_Bot
         }
         return $Botes;
     }
+    public function getAllBotPage($page)
+    {
+        $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
+        mysqli_select_db($link, "pbl4_v2");
+        $sql = "SELECT * FROM bot ORDER BY Id ASC";
+        $offset = $page * 15;
+        $sql = $sql . " LIMIT 15 OFFSET " . $offset;
+        $rs = mysqli_query($link, $sql);
+        $Botes = array();
+        $i = 0;
+        while ($row = mysqli_fetch_array($rs)) {
+            $Id = $row['Id'];
+            $Ip = $row['Ip'];
+            $Port = $row['Port'];
+            $Status = $row['Status'];
+            $Remove = $row['Remove'];
+            $Botes[$i++] = new Bot($Id, $Ip, $Port, $Status, $Remove);
+        }
+        return $Botes;
+    }
     public function getBotActive()
     {
         $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
@@ -39,11 +59,51 @@ class DAO_Bot
         }
         return $Botes;
     }
+    public function getBotActivePage($page)
+    {
+        $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
+        mysqli_select_db($link, "pbl4_v2");
+        $sql = "SELECT * FROM bot WHERE Status = 1 ORDER BY Id ASC";
+        $offset = $page * 15;
+        $sql = $sql . " LIMIT 15 OFFSET " . $offset;
+        $rs = mysqli_query($link, $sql);
+        $Botes = array();
+        $i = 0;
+        while ($row = mysqli_fetch_array($rs)) {
+            $Id = $row['Id'];
+            $Ip = $row['Ip'];
+            $Port = $row['Port'];
+            $Status = $row['Status'];
+            $Remove = $row['Remove'];
+            $Botes[$i++] = new Bot($Id, $Ip, $Port, $Status, $Remove);
+        }
+        return $Botes;
+    }
     public function getBotPassive()
     {
         $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
         mysqli_select_db($link, "pbl4_v2");
         $sql = "SELECT * FROM bot WHERE Status = 0";
+        $rs = mysqli_query($link, $sql);
+        $Botes = array();
+        $i = 0;
+        while ($row = mysqli_fetch_array($rs)) {
+            $Id = $row['Id'];
+            $Ip = $row['Ip'];
+            $Port = $row['Port'];
+            $Status = $row['Status'];
+            $Remove = $row['Remove'];
+            $Botes[$i++] = new Bot($Id, $Ip, $Port, $Status, $Remove);
+        }
+        return $Botes;
+    }
+    public function getBotPassivePage($page)
+    {
+        $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
+        mysqli_select_db($link, "pbl4_v2");
+        $sql = "SELECT * FROM bot WHERE Status = 0 ORDER BY Id ASC";
+        $offset = $page * 15;
+        $sql = $sql . " LIMIT 15 OFFSET " . $offset;
         $rs = mysqli_query($link, $sql);
         $Botes = array();
         $i = 0;

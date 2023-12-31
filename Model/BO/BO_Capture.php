@@ -8,10 +8,15 @@ class BO_Capture
         $daoCapture = new DAO_Capture();
         $daoCapture->addCapture($idbot, $detail, $content);
     }
-    public function getListCapture($idbot)
+    public function getListCapture($idbot,$page)
     {
         $daoCapture = new DAO_Capture();
-        return $daoCapture->getListCapture($idbot);
+        return $daoCapture->getListCapture($idbot,$page);
+    }
+    public function getCountListCapture($idbot)
+    {
+        $daoCapture = new DAO_Capture();
+        return $daoCapture->getCountListCapture($idbot);
     }
     public function getCaptureDetail($idCapture)
     {

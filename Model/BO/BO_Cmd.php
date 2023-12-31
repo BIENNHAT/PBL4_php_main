@@ -8,10 +8,15 @@ class BO_Cmd
         $daoCmd = new DAO_Cmd();
         $daoCmd->addCmd($idbot, $detail, $content);
     }
-    public function getListCmd($idbot)
+    public function getListCmd($idbot,$page)
     {
         $daoCmd = new DAO_Cmd();
-        return $daoCmd->getListCmd($idbot);
+        return $daoCmd->getListCmd($idbot,$page);
+    }
+    public function getCountListCmd($idbot)
+    {
+        $daoCmd = new DAO_Cmd();
+        return $daoCmd->getCountListCmd($idbot);
     }
     public function getCmdDetail($idCmd)
     {

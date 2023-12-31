@@ -19,7 +19,13 @@ class C_Cmd
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $id = $_REQUEST["ID"];
             $boCmd = new BO_Cmd();
-            $listCmd = $boCmd->getListCmd($id);
+            if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == 0) {
+                $listCmd = $boCmd->getListCmd($id, 0);
+            } else {
+                $listCmd = $boCmd->getListCmd($id, $_REQUEST["page"]);
+            }
+           
+            $count = $boCmd->getCountListCmd($id);
             include_once("../View/viewCmd.php");
         } else {
             include_once('../View/noLogin.php');

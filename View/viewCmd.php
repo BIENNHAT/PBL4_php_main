@@ -59,6 +59,24 @@
 
                     </table>
                 </div>
+                <div style="margin:16px 0px;  display:flex; column-gap: 8px; flex-wrap: wrap;">
+
+                    <?php
+                    if ($count > 15) {
+                        echo '<p >Page</p>';
+                        for ($i = 0; $i < $count / 15; $i++) {
+                            if (isset($_GET['opt'])) {
+                                $href = "C_Cmd.php?opt=view&page=" . $i . "&ID=" . $id;
+                            }
+                            $numPage = $i + 1;
+                            $link = "<a style='text-decoration:underline; border: 1px solid #00ff00; padding:2px 4px; color: #00ff00;' href='" . $href . "'>" . $numPage . "</a>";
+                            echo $link;
+                        }
+                    }
+                    ?>
+
+
+                </div>
                 <button class="content_back" onclick="history.back()">Go Back</button>
             </div>
         </div>

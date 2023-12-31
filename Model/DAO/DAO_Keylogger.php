@@ -17,11 +17,13 @@ class DAO_Keylogger
         $stmt->execute();
         $db->close();
     }
-    public function getListKeylogger($idbot)
+    public function getListKeylogger($idbot,$page)
     {
         $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
         mysqli_select_db($link, "pbl4_v2");
         $sql = "Select * from keylogger where IdBot = " . $idbot . " ORDER BY TimeStart DESC";
+        $offset = $page * 15;
+        $sql = $sql . " LIMIT 15 OFFSET " . $offset;
         $rs = mysqli_query($link, $sql);
         $listKeylogger = array();
         $i = 0;
@@ -34,6 +36,20 @@ class DAO_Keylogger
             $listKeylogger[$i++] = new Keylogger($IdKeylogger, $IdBot, $KeyloggerResult, $TimeStart, $TimeStop);
         }
         return $listKeylogger;
+    }
+    public function getCountListKeylogger($idbot)
+    {
+        $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
+        mysqli_select_db($link, "pbl4_v2");
+        $sql = "Select * from keylogger where IdBot = " . $idbot . " ORDER BY TimeStart DESC";
+
+        $rs = mysqli_query($link, $sql);
+   
+        $i = 0;
+        while ($row = mysqli_fetch_array($rs)) {
+            $i++;
+        }
+        return $i;
     }
     public function getKeyloggerDetail($idKeylogger)
     {

@@ -11,11 +11,14 @@ class DAO_Cmd
         $stmt->execute();
         $db->close();
     }
-    public function getListCmd($idbot)
+
+    public function getListCmd($idbot,$page)
     {
         $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
         mysqli_select_db($link, "pbl4_v2");
         $sql = "Select * from cmd where IdBot = " . $idbot . " ORDER BY Time DESC";
+        $offset = $page * 15;
+        $sql = $sql . " LIMIT 15 OFFSET " . $offset;
         $rs = mysqli_query($link, $sql);
         $listCmd = array();
         $i = 0;
@@ -28,6 +31,20 @@ class DAO_Cmd
             $listCmd[$i++] = new Cmd($IdCmd, $IdBot, $Time, $Cmd, $CmdResult);
         }
         return $listCmd;
+    }
+    public function getCountListCmd($idbot)
+    {
+        $link = mysqli_connect("localhost", "root", "") or die("Khong the ket noi den CSDL MYSQL");
+        mysqli_select_db($link, "pbl4_v2");
+        $sql = "Select * from cmd where IdBot = " . $idbot . " ORDER BY Time DESC";
+        $count = 0;
+        $rs = mysqli_query($link, $sql);
+        $listCmd = array();
+        $i = 0;
+        while ($row = mysqli_fetch_array($rs)) {
+            $count++;
+        }
+        return $count;
     }
     public function getCmdDetail($idCmd)
     {
