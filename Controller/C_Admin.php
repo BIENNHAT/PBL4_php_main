@@ -27,6 +27,7 @@ class C_Admin
             $_SESSION['user'] = $value_username;
             $boBot = new BO_Bot();
             $listBot = $boBot->getAllBot();
+            $count = $boBot->getCountAllBot();
             include_once("../View/listBot.php");
         } else {
             header('Location: ../View/login.php');
