@@ -3,6 +3,8 @@ include_once("../Model/Bean/Cookies.php");
 include_once("../Model/BO/BO_Cookies.php");
 include_once("../Model/Bean/Bot.php");
 include_once("../Model/BO/BO_Bot.php");
+include_once("../utils/checkServerOn.php");
+
 
 class C_Cookies
 {
@@ -17,6 +19,7 @@ class C_Cookies
     public function view()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $id = $_REQUEST["ID"];
             $boCookies = new BO_Cookies();
@@ -36,6 +39,7 @@ class C_Cookies
     public function CookiesDetail()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $idCookies = $_REQUEST["IdCookies"];
             $idBot = $_REQUEST["IdBot"];

@@ -3,6 +3,8 @@ include_once("../Model/Bean/Cmd.php");
 include_once("../Model/BO/BO_Cmd.php");
 include_once("../Model/Bean/Bot.php");
 include_once("../Model/BO/BO_Bot.php");
+include_once("../utils/checkServerOn.php");
+
 class C_Cmd
 {
     public function addCmd()
@@ -16,6 +18,7 @@ class C_Cmd
     public function view()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $id = $_REQUEST["ID"];
             $boCmd = new BO_Cmd();
@@ -34,6 +37,7 @@ class C_Cmd
     public function cmdDetail()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $idCmd = $_REQUEST["IdCmd"];
             $idBot = $_REQUEST["IdBot"];

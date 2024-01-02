@@ -3,6 +3,8 @@ include_once("../Model/Bean/Capture.php");
 include_once("../Model/BO/BO_Capture.php");
 include_once("../Model/Bean/Bot.php");
 include_once("../Model/BO/BO_Bot.php");
+include_once("../utils/checkServerOn.php");
+
 class C_Capture
 {
     public function addCapture()
@@ -16,6 +18,7 @@ class C_Capture
     public function view()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $id = $_REQUEST["ID"];
             $boCapture = new BO_Capture();
@@ -36,6 +39,7 @@ class C_Capture
     public function CaptureDetail()
     {
         session_start();
+        checkSocket();
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $idCapture = $_REQUEST["IdCapture"];
             //$idBot = $_REQUEST["IdBot"];

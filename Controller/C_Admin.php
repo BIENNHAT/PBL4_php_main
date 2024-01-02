@@ -2,6 +2,8 @@
 include_once("../Model/Bean/Admin.php");
 include_once("../Model/BO/BO_Admin.php");
 include_once("../Model/BO/BO_Bot.php");
+include_once("../utils/checkServerOn.php");
+
 class C_Admin
 {
 
@@ -18,6 +20,7 @@ class C_Admin
     public function checkLogin()
     {
         session_start();
+        checkSocket();
         $boAdmin = new BO_Admin();
         $value_username =  $_REQUEST['username'];
         $value_password = $_REQUEST['password'];
@@ -36,7 +39,7 @@ class C_Admin
     public function checkLogout()
     {
         session_start();
-        session_unset();
+        $_SESSION['login'] = false;
         header('Location: ../View/index.php');
     }
 }

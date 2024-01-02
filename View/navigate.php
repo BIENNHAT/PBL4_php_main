@@ -100,4 +100,9 @@ if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
           <p class="navigate_btn-name">Log In</p>
         </a>';
 }
+
+
+if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
+  echo '<div style="width:100%; text-align:center;font-size:24px; border:1px solid #ccc; padding: 8px;">Server: '. $_SESSION['serverStatus'].'</div>';
+}
 echo '</div>';
